@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="byr.win.planthelper.dao.DeviceInfoMapper">
+  <resultMap id="BaseResultMap" type="byr.win.planthelper.domain.DeviceInfo">
+    <id column="device_id" jdbcType="INTEGER" property="deviceId" />
+    <result column="device_psw" jdbcType="INTEGER" property="devicePsw" />
+    <result column="plant_id" jdbcType="INTEGER" property="plantId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    device_id, device_psw, plant_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from device
+    where device_id = #{deviceId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from device
+    where device_id = #{deviceId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="byr.win.planthelper.domain.DeviceInfo" useGeneratedKeys="true" keyProperty="deviceId">
+    insert into device (device_id, device_psw, plant_id
+      )
+    values (#{deviceId,jdbcType=INTEGER}, #{devicePsw,jdbcType=INTEGER}, #{plantId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="byr.win.planthelper.domain.DeviceInfo">
+    insert into device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="devicePsw != null">
+        device_psw,
+      </if>
+      <if test="plantId != null">
+        plant_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="devicePsw != null">
+        #{devicePsw,jdbcType=INTEGER},
+      </if>
+      <if test="plantId != null">
+        #{plantId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="byr.win.planthelper.domain.DeviceInfo">
+    update device
+    <set>
+      <if test="devicePsw != null">
+        device_psw = #{devicePsw,jdbcType=INTEGER},
+      </if>
+      <if test="plantId != null">
+        plant_id = #{plantId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where device_id = #{deviceId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="byr.win.planthelper.domain.DeviceInfo">
+    update device
+    set device_psw = #{devicePsw,jdbcType=INTEGER},
+      plant_id = #{plantId,jdbcType=INTEGER}
+    where device_id = #{deviceId,jdbcType=INTEGER}
+  </update>
+</mapper>

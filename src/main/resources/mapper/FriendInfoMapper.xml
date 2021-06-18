@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="byr.win.planthelper.dao.FriendInfoMapper">
+  <resultMap id="BaseResultMap" type="byr.win.planthelper.domain.FriendInfo">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <id column="friend_id" jdbcType="INTEGER" property="friendId" />
+    <result column="friend_name" jdbcType="VARCHAR" property="friendName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, friend_id, friend_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from friend
+    where user_id = #{userId,jdbcType=INTEGER}
+      and friend_id = #{friendId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from friend
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUserIdAndFriendId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from friend
+    where user_id = #{userId,jdbcType=INTEGER}
+    and friend_id = #{friendId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from friend
+    where user_id = #{userId,jdbcType=INTEGER}
+      and friend_id = #{friendId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="byr.win.planthelper.domain.FriendInfo">
+    insert into friend (user_id, friend_id, friend_name
+      )
+    values (#{userId,jdbcType=INTEGER}, #{friendId,jdbcType=INTEGER}, #{friendName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="byr.win.planthelper.domain.FriendInfo">
+    insert into friend
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="friendId != null">
+        friend_id,
+      </if>
+      <if test="friendName != null">
+        friend_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="friendId != null">
+        #{friendId,jdbcType=INTEGER},
+      </if>
+      <if test="friendName != null">
+        #{friendName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="byr.win.planthelper.domain.FriendInfo">
+    update friend
+    <set>
+      <if test="friendName != null">
+        friend_name = #{friendName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+      and friend_id = #{friendId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="byr.win.planthelper.domain.FriendInfo">
+    update friend
+    set friend_name = #{friendName,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+      and friend_id = #{friendId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

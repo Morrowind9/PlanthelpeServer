@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="byr.win.planthelper.dao.CategoryInfoMapper">
+  <resultMap id="BaseResultMap" type="byr.win.planthelper.domain.CategoryInfo">
+    <id column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="difficulty" jdbcType="INTEGER" property="difficulty" />
+    <result column="behavior" jdbcType="VARCHAR" property="behavior" />
+    <result column="trait" jdbcType="VARCHAR" property="trait" />
+    <result column="kingdom_c" jdbcType="VARCHAR" property="kingdomC" />
+    <result column="phylum_c" jdbcType="VARCHAR" property="phylumC" />
+    <result column="class_c" jdbcType="VARCHAR" property="classC" />
+    <result column="order_c" jdbcType="VARCHAR" property="orderC" />
+    <result column="family_c" jdbcType="VARCHAR" property="familyC" />
+    <result column="genus_c" jdbcType="VARCHAR" property="genusC" />
+    <result column="species_c" jdbcType="VARCHAR" property="speciesC" />
+    <result column="temp_low_bound" jdbcType="REAL" property="tempLowBound" />
+    <result column="temp_high_bound" jdbcType="REAL" property="tempHighBound" />
+    <result column="humi_low_bound" jdbcType="REAL" property="humiLowBound" />
+    <result column="humi_high_bound" jdbcType="REAL" property="humiHighBound" />
+    <result column="illum_low_bound" jdbcType="REAL" property="illumLowBound" />
+    <result column="illum_high_bound" jdbcType="REAL" property="illumHighBound" />
+    <result column="location" jdbcType="INTEGER" property="location" />
+    <result column="artistic" jdbcType="INTEGER" property="artistic" />
+    <result column="season" jdbcType="INTEGER" property="season" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    category_id, category_name, difficulty, behavior, trait, kingdom_c, phylum_c, class_c, 
+    order_c, family_c, genus_c, species_c, temp_low_bound, temp_high_bound, humi_low_bound, 
+    humi_high_bound, illum_low_bound, illum_high_bound, location, artistic, season
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from category
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from category
+  </select>
+  <select id="selectForM" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from category
+    where artistic between 1 and 3
+  </select>
+  <select id="selectForF" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from category
+    where artistic between 2 and 4
+  </select>
+  <select id="selectByDiffy" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from category
+    where difficulty between 1 and #{diffy,jdbcType=INTEGER}
+  </select>
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from category
+    where category_name = #{categoryName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBySeason" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from category
+    where season = #{season,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from category
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="byr.win.planthelper.domain.CategoryInfo">
+    insert into category (category_id, category_name, difficulty, 
+      behavior, trait, kingdom_c, 
+      phylum_c, class_c, order_c, 
+      family_c, genus_c, species_c, 
+      temp_low_bound, temp_high_bound, humi_low_bound, 
+      humi_high_bound, illum_low_bound, illum_high_bound, 
+      location, artistic, season
+      )
+    values (#{categoryId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{difficulty,jdbcType=INTEGER}, 
+      #{behavior,jdbcType=VARCHAR}, #{trait,jdbcType=VARCHAR}, #{kingdomC,jdbcType=VARCHAR}, 
+      #{phylumC,jdbcType=VARCHAR}, #{classC,jdbcType=VARCHAR}, #{orderC,jdbcType=VARCHAR}, 
+      #{familyC,jdbcType=VARCHAR}, #{genusC,jdbcType=VARCHAR}, #{speciesC,jdbcType=VARCHAR}, 
+      #{tempLowBound,jdbcType=REAL}, #{tempHighBound,jdbcType=REAL}, #{humiLowBound,jdbcType=REAL}, 
+      #{humiHighBound,jdbcType=REAL}, #{illumLowBound,jdbcType=REAL}, #{illumHighBound,jdbcType=REAL}, 
+      #{location,jdbcType=INTEGER}, #{artistic,jdbcType=INTEGER}, #{season,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="byr.win.planthelper.domain.CategoryInfo">
+    insert into category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="categoryName != null">
+        category_name,
+      </if>
+      <if test="difficulty != null">
+        difficulty,
+      </if>
+      <if test="behavior != null">
+        behavior,
+      </if>
+      <if test="trait != null">
+        trait,
+      </if>
+      <if test="kingdomC != null">
+        kingdom_c,
+      </if>
+      <if test="phylumC != null">
+        phylum_c,
+      </if>
+      <if test="classC != null">
+        class_c,
+      </if>
+      <if test="orderC != null">
+        order_c,
+      </if>
+      <if test="familyC != null">
+        family_c,
+      </if>
+      <if test="genusC != null">
+        genus_c,
+      </if>
+      <if test="speciesC != null">
+        species_c,
+      </if>
+      <if test="tempLowBound != null">
+        temp_low_bound,
+      </if>
+      <if test="tempHighBound != null">
+        temp_high_bound,
+      </if>
+      <if test="humiLowBound != null">
+        humi_low_bound,
+      </if>
+      <if test="humiHighBound != null">
+        humi_high_bound,
+      </if>
+      <if test="illumLowBound != null">
+        illum_low_bound,
+      </if>
+      <if test="illumHighBound != null">
+        illum_high_bound,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="artistic != null">
+        artistic,
+      </if>
+      <if test="season != null">
+        season,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null">
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="difficulty != null">
+        #{difficulty,jdbcType=INTEGER},
+      </if>
+      <if test="behavior != null">
+        #{behavior,jdbcType=VARCHAR},
+      </if>
+      <if test="trait != null">
+        #{trait,jdbcType=VARCHAR},
+      </if>
+      <if test="kingdomC != null">
+        #{kingdomC,jdbcType=VARCHAR},
+      </if>
+      <if test="phylumC != null">
+        #{phylumC,jdbcType=VARCHAR},
+      </if>
+      <if test="classC != null">
+        #{classC,jdbcType=VARCHAR},
+      </if>
+      <if test="orderC != null">
+        #{orderC,jdbcType=VARCHAR},
+      </if>
+      <if test="familyC != null">
+        #{familyC,jdbcType=VARCHAR},
+      </if>
+      <if test="genusC != null">
+        #{genusC,jdbcType=VARCHAR},
+      </if>
+      <if test="speciesC != null">
+        #{speciesC,jdbcType=VARCHAR},
+      </if>
+      <if test="tempLowBound != null">
+        #{tempLowBound,jdbcType=REAL},
+      </if>
+      <if test="tempHighBound != null">
+        #{tempHighBound,jdbcType=REAL},
+      </if>
+      <if test="humiLowBound != null">
+        #{humiLowBound,jdbcType=REAL},
+      </if>
+      <if test="humiHighBound != null">
+        #{humiHighBound,jdbcType=REAL},
+      </if>
+      <if test="illumLowBound != null">
+        #{illumLowBound,jdbcType=REAL},
+      </if>
+      <if test="illumHighBound != null">
+        #{illumHighBound,jdbcType=REAL},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=INTEGER},
+      </if>
+      <if test="artistic != null">
+        #{artistic,jdbcType=INTEGER},
+      </if>
+      <if test="season != null">
+        #{season,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="byr.win.planthelper.domain.CategoryInfo">
+    update category
+    <set>
+      <if test="categoryName != null">
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="difficulty != null">
+        difficulty = #{difficulty,jdbcType=INTEGER},
+      </if>
+      <if test="behavior != null">
+        behavior = #{behavior,jdbcType=VARCHAR},
+      </if>
+      <if test="trait != null">
+        trait = #{trait,jdbcType=VARCHAR},
+      </if>
+      <if test="kingdomC != null">
+        kingdom_c = #{kingdomC,jdbcType=VARCHAR},
+      </if>
+      <if test="phylumC != null">
+        phylum_c = #{phylumC,jdbcType=VARCHAR},
+      </if>
+      <if test="classC != null">
+        class_c = #{classC,jdbcType=VARCHAR},
+      </if>
+      <if test="orderC != null">
+        order_c = #{orderC,jdbcType=VARCHAR},
+      </if>
+      <if test="familyC != null">
+        family_c = #{familyC,jdbcType=VARCHAR},
+      </if>
+      <if test="genusC != null">
+        genus_c = #{genusC,jdbcType=VARCHAR},
+      </if>
+      <if test="speciesC != null">
+        species_c = #{speciesC,jdbcType=VARCHAR},
+      </if>
+      <if test="tempLowBound != null">
+        temp_low_bound = #{tempLowBound,jdbcType=REAL},
+      </if>
+      <if test="tempHighBound != null">
+        temp_high_bound = #{tempHighBound,jdbcType=REAL},
+      </if>
+      <if test="humiLowBound != null">
+        humi_low_bound = #{humiLowBound,jdbcType=REAL},
+      </if>
+      <if test="humiHighBound != null">
+        humi_high_bound = #{humiHighBound,jdbcType=REAL},
+      </if>
+      <if test="illumLowBound != null">
+        illum_low_bound = #{illumLowBound,jdbcType=REAL},
+      </if>
+      <if test="illumHighBound != null">
+        illum_high_bound = #{illumHighBound,jdbcType=REAL},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=INTEGER},
+      </if>
+      <if test="artistic != null">
+        artistic = #{artistic,jdbcType=INTEGER},
+      </if>
+      <if test="season != null">
+        season = #{season,jdbcType=INTEGER},
+      </if>
+    </set>
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="byr.win.planthelper.domain.CategoryInfo">
+    update category
+    set category_name = #{categoryName,jdbcType=VARCHAR},
+      difficulty = #{difficulty,jdbcType=INTEGER},
+      behavior = #{behavior,jdbcType=VARCHAR},
+      trait = #{trait,jdbcType=VARCHAR},
+      kingdom_c = #{kingdomC,jdbcType=VARCHAR},
+      phylum_c = #{phylumC,jdbcType=VARCHAR},
+      class_c = #{classC,jdbcType=VARCHAR},
+      order_c = #{orderC,jdbcType=VARCHAR},
+      family_c = #{familyC,jdbcType=VARCHAR},
+      genus_c = #{genusC,jdbcType=VARCHAR},
+      species_c = #{speciesC,jdbcType=VARCHAR},
+      temp_low_bound = #{tempLowBound,jdbcType=REAL},
+      temp_high_bound = #{tempHighBound,jdbcType=REAL},
+      humi_low_bound = #{humiLowBound,jdbcType=REAL},
+      humi_high_bound = #{humiHighBound,jdbcType=REAL},
+      illum_low_bound = #{illumLowBound,jdbcType=REAL},
+      illum_high_bound = #{illumHighBound,jdbcType=REAL},
+      location = #{location,jdbcType=INTEGER},
+      artistic = #{artistic,jdbcType=INTEGER},
+      season = #{season,jdbcType=INTEGER}
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="byr.win.planthelper.dao.AccountInfoMapper">
+  <resultMap id="BaseResultMap" type="byr.win.planthelper.domain.AccountInfo">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_psw" jdbcType="VARCHAR" property="userPsw" />
+    <result column="location_id" jdbcType="INTEGER" property="locationId" />
+    <result column="highest_diffy" jdbcType="INTEGER" property="highestDiffy" />
+    <result column="gender" jdbcType="BIT" property="gender" />
+    <result column="login" jdbcType="BIT" property="login" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, user_name, user_psw, location_id, highest_diffy, gender, login
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from account
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from account
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="byr.win.planthelper.domain.AccountInfo" useGeneratedKeys="true" keyProperty="userId">
+    insert into account (user_id, user_name, user_psw, 
+      location_id, highest_diffy, gender, 
+      login)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPsw,jdbcType=VARCHAR}, 
+      #{locationId,jdbcType=INTEGER}, #{highestDiffy,jdbcType=INTEGER}, #{gender,jdbcType=BIT}, 
+      #{login,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="byr.win.planthelper.domain.AccountInfo">
+    insert into account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="userPsw != null">
+        user_psw,
+      </if>
+      <if test="locationId != null">
+        location_id,
+      </if>
+      <if test="highestDiffy != null">
+        highest_diffy,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="login != null">
+        login,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPsw != null">
+        #{userPsw,jdbcType=VARCHAR},
+      </if>
+      <if test="locationId != null">
+        #{locationId,jdbcType=INTEGER},
+      </if>
+      <if test="highestDiffy != null">
+        #{highestDiffy,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=BIT},
+      </if>
+      <if test="login != null">
+        #{login,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="byr.win.planthelper.domain.AccountInfo">
+    update account
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPsw != null">
+        user_psw = #{userPsw,jdbcType=VARCHAR},
+      </if>
+      <if test="locationId != null">
+        location_id = #{locationId,jdbcType=INTEGER},
+      </if>
+      <if test="highestDiffy != null">
+        highest_diffy = #{highestDiffy,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=BIT},
+      </if>
+      <if test="login != null">
+        login = #{login,jdbcType=BIT},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="byr.win.planthelper.domain.AccountInfo">
+    update account
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_psw = #{userPsw,jdbcType=VARCHAR},
+      location_id = #{locationId,jdbcType=INTEGER},
+      highest_diffy = #{highestDiffy,jdbcType=INTEGER},
+      gender = #{gender,jdbcType=BIT},
+      login = #{login,jdbcType=BIT}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>
